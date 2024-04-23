@@ -2,7 +2,7 @@ import React from 'react'
 
 const Content = () => {
   return (
-    <div>Content</div>
+    <div className='w-[83.5%] pt-4 rounded-2xl bg-white'>Content</div>
   )
 }
 

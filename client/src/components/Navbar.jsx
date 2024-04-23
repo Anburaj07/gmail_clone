@@ -4,31 +4,34 @@ import styled from "styled-components";
 const Navbar = () => {
   const [search, setSearch] = useState("");
 
-  const handleSearch=()=>{
-    console.log(search)
-  }
+  const handleSearch = () => {
+    console.log(search);
+  };
   return (
-    <DIV className="flex items-center justify-around w-[100%] bg-[#d6dadc] p-4">
-      <div className=" w-[20%] flex items-center">
-        <h2 className="text-xl font-normal ">Gmail</h2>
+    <DIV className="flex items-center justify-between w-[100%] p-4 text-left">
+      <div className="w-[65%] flex justify-around ">
+        <div className=" w-[25%] flex items-center justify-center ">
+          <h2 className="text-xl font-normal text-white">Gmail</h2>
+        </div>
+        <div className="rounded-full flex justify-between px-4 items-center bg-white w-[75%]">
+          <div className=" flex items-center">
+            <button>🔍</button>
+            <input
+              type="text"
+              className="w-[50%] font-normal text-lg ml-2"
+              placeholder="Search mail"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key == "Enter") {
+                  handleSearch();
+                }
+              }}
+            />
+          </div>
+          <button onClick={() => setSearch("")}>✖️</button>
+        </div>
       </div>
-      <div className="rounded-full flex justify-around items-center bg-white w-[40%]">
-        <button>🔍</button>
-        <input
-          type="text"
-          className="w-[50%] font-normal text-lg"
-          placeholder="Search mail"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          onKeyDown={(e)=>{
-            if(e.key=="Enter"){
-                handleSearch()
-            }
-          }}
-        />
-        <button onClick={()=>setSearch('')}>✖️</button>
-      </div>
-      {/* border border-gray-600 */}
       <div className="w-[17%] flex justify-around items-center">
         <button>❔</button>
         <button>⚙️</button>
@@ -43,7 +46,6 @@ export default Navbar;
 
 const DIV = styled.div`
   div {
-    /* border: 2px solid red; */
     height: 50px;
   }
 `;
