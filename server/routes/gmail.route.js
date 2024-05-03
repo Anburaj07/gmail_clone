@@ -23,6 +23,17 @@ gmailRouter.post("/add", async (req, res) => {
   }
 });
 
+gmailRouter.patch("/update/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const payload = req.body;
+    await GmailModel.findByIdAndUpdate({ _id: id }, payload);
+    res.status(200).json({ msg: `Gmail with ${id} updated` });
+  } catch (error) {
+    res.status(400).json({ err: error });
+  }
+});
+
 gmailRouter.delete("/delete/:id", async (req, res) => {
   try {
     const { id } = req.params;
