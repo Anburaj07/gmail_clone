@@ -4,10 +4,10 @@ import { useDeleteGmailMutation } from "../redux/slices/gmailApi";
 
 const SingleMail = ({ _id, from, subject, content, date }) => {
   const [showDelete, setShowDelete] = useState(false);
-  const [deleteGmail]=useDeleteGmailMutation()
+  const [deleteGmail] = useDeleteGmailMutation();
   const handleDelete = (id) => {
     console.log(id);
-    deleteGmail(id)
+    deleteGmail(id);
   };
   return (
     <div
@@ -15,7 +15,7 @@ const SingleMail = ({ _id, from, subject, content, date }) => {
       onMouseEnter={() => setShowDelete(true)}
       onMouseLeave={() => setShowDelete(false)}
     >
-      <div className="flex w-[14%]">
+      <div className="flex w-[17%]">
         <button>⭐</button>
         <p>{from}</p>
       </div>
