@@ -6,7 +6,6 @@ import GmailList from "./GmailList";
 const Content = () => {
   const { data: gmails, isLoading, isSuccess } = useGetGmailsQuery();
   const [state, setState] = useState("Primary");
-  console.log(state);
   return (
     <div className="w-[83.5%] py-4 rounded-2xl bg-[#e1d9dd]">
       <div className="flex justify-between p-2">
@@ -18,7 +17,7 @@ const Content = () => {
           onClick={() => setState("Primary")}
           className={`w-[33%] p-2 hover:bg-[#d0c3c5] ${
             state == "Primary" &&
-            "font-semibold text-[#5030E5] border-b-2 border-indigo-500"
+            "font-semibold text-[#5030E5] border-b-4 border-indigo-900"
           }`}
         >
           <button>🖼️ Primary</button>
@@ -27,7 +26,7 @@ const Content = () => {
           onClick={() => setState("Promotions")}
           className={`w-[33%] p-2 hover:bg-[#d0c3c5] ${
             state == "Promotions" &&
-            "font-semibold text-[#5030E5] border-b-2 border-indigo-500"
+            "font-semibold text-[#5030E5] border-b-4 border-indigo-900"
           }`}
         >
           <button>🧷 Promotions</button>
@@ -36,7 +35,7 @@ const Content = () => {
           onClick={() => setState("Social")}
           className={`w-[33%] p-2 hover:bg-[#d0c3c5] ${
             state == "Social" &&
-            "font-semibold text-[#5030E5] border-b-2 border-indigo-500"
+            "font-semibold text-[#4123c5] border-b-4 border-indigo-900"
           }`}
         >
           <button>👪 Social</button>
