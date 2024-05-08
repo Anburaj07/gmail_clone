@@ -6,7 +6,6 @@ const SingleMail = ({ _id, from, subject, content, date }) => {
   const [showDelete, setShowDelete] = useState(false);
   const [deleteGmail] = useDeleteGmailMutation();
   const handleDelete = (id) => {
-    console.log(id);
     deleteGmail(id);
   };
   return (
@@ -23,7 +22,6 @@ const SingleMail = ({ _id, from, subject, content, date }) => {
         <p>{subject}</p>
         <p className="text-[#4f4f4f]">- {content}</p>
       </div>
-
       <div className="w-[7%]">
         {!showDelete ? (
           <p>{date}</p>
