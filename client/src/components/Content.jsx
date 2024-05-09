@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import SingleMail from "./SingleMail";
-import { useGetGmailsQuery } from "../redux/slices/gmailApi";
 import GmailList from "./GmailList";
+import { useGetGmailsQuery } from "../redux/slices/gmailApi";
 
 const Content = () => {
   const { data: gmails, isLoading, isSuccess } = useGetGmailsQuery();
@@ -19,21 +18,19 @@ const Content = () => {
   }
 
   if (isSuccess) {
-    promotion = gmails.filter((el) => el.category == "promotion");
-    social = gmails.filter((el) => el.category == "social");
+    promotion = gmails.filter((el) => el.category === "promotion");
+    social = gmails.filter((el) => el.category === "social");
     primary = gmails.filter(
-      (el) => el.category != "promotion" && el.category != "social"
+      (el) => el.category !== "promotion" && el.category !== "social"
     );
   }
-  console.log(promotion, "promotion");
-  console.log("primary:", primary);
 
   let data =
     state === "primary" ? primary : state === "promotion" ? promotion : social;
 
   return (
-    <div className="w-[83.5%] py-4 rounded-2xl bg-[#e1d9dd]">
-      <div className="flex justify-between p-2">
+    <div className="w-[83.5%] pb-4 rounded-2xl bg-[#e1d9dd] sticky top-0 h-[36rem] box-border overflow-y-auto ">
+      <div className="flex justify-between p-4 sticky top-0 bg-[#e1d9dd]">
         <div>◻️ 🔄️ </div>
         {isSuccess && <div>Total: {data.length} </div>}
       </div>
@@ -41,7 +38,7 @@ const Content = () => {
         <div
           onClick={() => setState("primary")}
           className={`w-[33%] p-2 hover:bg-[#d0c3c5] ${
-            state == "Primary" &&
+            state === "primary" &&
             "font-semibold text-[#5030E5] border-b-4 border-indigo-900"
           }`}
         >
@@ -50,7 +47,7 @@ const Content = () => {
         <div
           onClick={() => setState("promotion")}
           className={`w-[33%] p-2 hover:bg-[#d0c3c5] ${
-            state == "Promotions" &&
+            state === "promotion" &&
             "font-semibold text-[#5030E5] border-b-4 border-indigo-900"
           }`}
         >
@@ -59,7 +56,7 @@ const Content = () => {
         <div
           onClick={() => setState("social")}
           className={`w-[33%] p-2 hover:bg-[#d0c3c5] ${
-            state == "Social" &&
+            state === "social" &&
             "font-semibold text-[#4123c5] border-b-4 border-indigo-900"
           }`}
         >
