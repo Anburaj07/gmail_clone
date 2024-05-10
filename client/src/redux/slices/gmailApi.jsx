@@ -28,6 +28,14 @@ export const gmailApi = createApi({
       }),
       invalidatesTags: ["gmails"],
     }),
+    editGmail: builder.mutation({
+      query: ({ id, ...gmail }) => ({
+        url: `update/${id}`,
+        method: "PATCH",
+        body: gmail,
+      }),
+      invalidatesTags:["gmails"]
+    }),
     deleteGmail: builder.mutation({
       query: (id) => ({
         url: `/delete/${id}`,
@@ -42,5 +50,6 @@ export const {
   useGetGmailsQuery,
   useGetGmailByIdQuery,
   useAddGmailMutation,
+  useEditGmailMutation,
   useDeleteGmailMutation,
 } = gmailApi;

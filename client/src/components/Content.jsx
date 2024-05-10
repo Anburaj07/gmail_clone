@@ -39,7 +39,7 @@ const Content = () => {
           onClick={() => setState("primary")}
           className={`w-[33%] p-2 hover:bg-[#d0c3c5] ${
             state === "primary" &&
-            "font-semibold text-[#5030E5] border-b-4 border-indigo-900"
+            "font-semibold text-[#5030E5] border-b-4 border-[#0b57d0]"
           }`}
         >
           <button>🖼️ Primary</button>
@@ -48,7 +48,7 @@ const Content = () => {
           onClick={() => setState("promotion")}
           className={`w-[33%] p-2 hover:bg-[#d0c3c5] ${
             state === "promotion" &&
-            "font-semibold text-[#5030E5] border-b-4 border-indigo-900"
+            "font-semibold text-[#5030E5] border-b-4 border-[#0b57d0]"
           }`}
         >
           <button>🧷 Promotions</button>
@@ -57,7 +57,7 @@ const Content = () => {
           onClick={() => setState("social")}
           className={`w-[33%] p-2 hover:bg-[#d0c3c5] ${
             state === "social" &&
-            "font-semibold text-[#4123c5] border-b-4 border-indigo-900"
+            "font-semibold text-[#4123c5] border-b-4 border-[#0b57d0]"
           }`}
         >
           <button>👪 Social</button>
