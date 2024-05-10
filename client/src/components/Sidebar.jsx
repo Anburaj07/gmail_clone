@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useAddGmailMutation } from "../redux/slices/gmailApi";
 
-const Sidebar = () => {
+const Sidebar = ({ setState }) => {
   const [showComposePopup, setShowComposePopup] = useState(false);
   const [to, setTo] = useState("");
   const [subject, setSubject] = useState("");
@@ -34,9 +34,9 @@ const Sidebar = () => {
       content,
       date: getCurrentDate(),
     };
-    addGmail(obj)
-    handleComposeClick()
-    alert("Mail sent successfully!")
+    addGmail(obj);
+    handleComposeClick();
+    alert("Mail sent successfully!");
     setContent("");
     setTo("");
     setSubject("");
@@ -50,13 +50,13 @@ const Sidebar = () => {
         ✏️ Compose
       </button>
       <div id="fileds" className="flex flex-col items-start ml-2 mt-4">
-        <button>📩 Inbox</button>
-        <button>⭐ Starred</button>
+        <button onClick={() => setState("inbox")}>📩 Inbox</button>
+        <button onClick={() => setState("starred")}>⭐ Starred</button>
         <button>⌚ Snoozed</button>
         <button>🧷 Important</button>
-        <button>➡️ Sent</button>
+        <button onClick={() => setState("sent")}>➡️ Sent</button>
         <button>📁 Drafts</button>
-        <button>🚫 Spam</button>
+        <button onClick={() => setState("spam")}>🚫 Spam</button>
       </div>
       {showComposePopup && (
         <ComposePopup>
