@@ -1,10 +1,17 @@
 import React, { useState } from "react";
 import GmailList from "./GmailList";
-import { useGetGmailsQuery } from "../redux/slices/gmailApi";
+import {
+  useDeleteGmailMutation,
+  useGetGmailsQuery,
+} from "../redux/slices/gmailApi";
+import delete_icon from "../../images/delete.png";
+import SingleMail from "./SingleMail";
 
 const Content = ({ field }) => {
   const { data: gmails, isLoading, isSuccess, refetch } = useGetGmailsQuery();
+  const [deleteGmail] = useDeleteGmailMutation();
   const [state, setState] = useState("primary");
+  const [gmailId, setGmailId] = useState("");
   let promotion = [];
   let primary = [];
   let social = [];
@@ -25,6 +32,12 @@ const Content = ({ field }) => {
     );
   }
 
+  const handleDelete = (id) => {
+    deleteGmail(id);
+    alert("Mail deleted successfully!");
+    setGmailId("")
+  };
+
   let data = "";
   if (field == "inbox") {
     data =
@@ -34,56 +47,74 @@ const Content = ({ field }) => {
         ? promotion
         : social;
   } else if (field == "starred") {
-    data = gmails.filter((el) => el.starred==true);
+    data = gmails.filter((el) => el.starred == true);
   }
   // else if (field == "sent") {
   //   data = gmails.filter((el) => el.starred==true); //doubt
   // }
-  else{
-    data=primary
+  else {
+    data = primary;
   }
 
   return (
     <div className="w-[83.5%] pb-4 rounded-2xl bg-[#e1d9dd] sticky top-0 h-[36rem] box-border overflow-y-auto ">
       <div className="flex justify-between p-4 sticky top-0 bg-[#e1d9dd]">
-        <div>
-          <button>◻️</button>
-          <button onClick={() => refetch()}>🔄️</button>
-        </div>
+        {!gmailId ? (
+          <div className="flex justify-between w-[5%]">
+            <button>◻️</button>
+            <button onClick={() => refetch()}>🔄️</button>
+          </div>
+        ) : (
+          <div className="flex justify-between w-[5%]">
+            <button onClick={() => setGmailId("")}>⬅️</button>
+            <img
+              src={delete_icon}
+              className="cursor-pointer"
+              alt=""
+              onClick={() => handleDelete(gmailId)}
+            />
+          </div>
+        )}
         {isSuccess && <div>Total: {data.length} </div>}
       </div>
-      {field == "inbox" && (
-        <div className={`w-[50%] text-left flex items-start pl-2`}>
-          <div
-            onClick={() => setState("primary")}
-            className={`w-[33%] p-2 hover:bg-[#d0c3c5] ${
-              state === "primary" &&
-              "font-semibold text-[#5030E5] border-b-4 border-[#0b57d0]"
-            }`}
-          >
-            <button>🖼️ Primary</button>
-          </div>
-          <div
-            onClick={() => setState("promotion")}
-            className={`w-[33%] p-2 hover:bg-[#d0c3c5] ${
-              state === "promotion" &&
-              "font-semibold text-[#5030E5] border-b-4 border-[#0b57d0]"
-            }`}
-          >
-            <button>🧷 Promotions</button>
-          </div>
-          <div
-            onClick={() => setState("social")}
-            className={`w-[33%] p-2 hover:bg-[#d0c3c5] ${
-              state === "social" &&
-              "font-semibold text-[#4123c5] border-b-4 border-[#0b57d0]"
-            }`}
-          >
-            <button>👪 Social</button>
-          </div>
+      {!gmailId ? (
+        <div>
+          {field == "inbox" && (
+            <div className={`w-[50%] text-left flex items-start pl-2`}>
+              <div
+                onClick={() => setState("primary")}
+                className={`w-[33%] p-2 hover:bg-[#d0c3c5] ${
+                  state === "primary" &&
+                  "font-semibold text-[#5030E5] border-b-4 border-[#0b57d0]"
+                }`}
+              >
+                <button>🖼️ Primary</button>
+              </div>
+              <div
+                onClick={() => setState("promotion")}
+                className={`w-[33%] p-2 hover:bg-[#d0c3c5] ${
+                  state === "promotion" &&
+                  "font-semibold text-[#5030E5] border-b-4 border-[#0b57d0]"
+                }`}
+              >
+                <button>🧷 Promotions</button>
+              </div>
+              <div
+                onClick={() => setState("social")}
+                className={`w-[33%] p-2 hover:bg-[#d0c3c5] ${
+                  state === "social" &&
+                  "font-semibold text-[#4123c5] border-b-4 border-[#0b57d0]"
+                }`}
+              >
+                <button>👪 Social</button>
+              </div>
+            </div>
+          )}
+          <GmailList data={data} setGmailId={setGmailId} />
         </div>
+      ) : (
+        <SingleMail id={gmailId} />
       )}
-      <GmailList data={data} />
     </div>
   );
 };

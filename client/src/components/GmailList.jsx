@@ -1,11 +1,10 @@
-import React from "react";
-import SingleMail from "./SingleMail";
+import Gmail from "./Gmail";
 
-const GmailList = ({ data }) => {
+const GmailList = ({ data,setGmailId }) => {
   return (
     <div>
       {data?.map((el) => (
-        <SingleMail key={el._id} {...el} />
+        <Gmail key={el._id} {...el} setGmailId={setGmailId}/>
       ))}
     </div>
   );

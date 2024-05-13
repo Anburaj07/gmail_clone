@@ -21,12 +21,12 @@ const Navbar = () => {
             Gmail
           </h2>
         </div>
-        <div className="rounded-full h-12 flex justify-between px-4 items-center bg-[#c6c3c3] w-[75%] focus-within:bg-white">
+        <div className="rounded-full h-12 flex justify-between px-4 items-center bg-[#777a9f] w-[75%] focus-within:bg-white">
           <div className="w-[96%] flex items-center">
             <button className="w-[6%]">🔍</button>
             <input
               type="text"
-              className="w-[100%] font-normal text-lg ml-2 placeholder-slate-50 bg-[#c6c3c3] focus:bg-white focus:outline-none focus:placeholder-black"
+              className="w-[100%] font-normal text-lg ml-2 placeholder-slate-50 bg-[#777a9f] focus:bg-white focus:outline-none focus:placeholder-black"
               placeholder="Search mail"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
