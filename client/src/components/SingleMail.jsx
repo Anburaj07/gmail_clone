@@ -3,10 +3,21 @@ import {
   useGetGmailByIdQuery,
 } from "../redux/slices/gmailApi";
 import dpPic from "../../images/dp.png";
+import { useSelector } from "react-redux";
 
-const SingleMail = ({ id }) => {
-  const { data, isLoading, isSuccess } = useGetGmailByIdQuery(id);
+const SingleMail = () => {
+  const gmailId = useSelector((store) => store.getGmail.gmailId);
+  const { data, isLoading, isSuccess } = useGetGmailByIdQuery(gmailId);
   const [editGmail] = useEditGmailMutation();
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center m-auto h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
+      </div>
+    );
+  }
+  const { _id, from, to, subject, category, content, date, starred } = data;
 
   const handleStarred = () => {
     editGmail({
@@ -20,15 +31,6 @@ const SingleMail = ({ id }) => {
       starred: !starred,
     });
   };
-
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center m-auto h-screen">
-        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
-      </div>
-    );
-  }
-  const { _id, from, to, subject, category, content, date, starred } = data;
 
   return (
     <div>
@@ -63,8 +65,14 @@ const SingleMail = ({ id }) => {
         <h2 className="text-xl font-medium text-center mt-16">{content}</h2>
       </div>
       <div className="flex w-[15%] justify-between mt-60 ml-16">
-        <button className="text-md border border-gray-800 rounded-full p-2"> ⬅️ Reply </button>
-        <button className="text-md border border-gray-800 rounded-full p-2"> ➡️ Forward </button>
+        <button className="text-md border border-gray-800 rounded-full p-2">
+          {" "}
+          ⬅️ Reply{" "}
+        </button>
+        <button className="text-md border border-gray-800 rounded-full p-2">
+          {" "}
+          ➡️ Forward{" "}
+        </button>
       </div>
     </div>
   );

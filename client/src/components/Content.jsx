@@ -6,12 +6,15 @@ import {
 } from "../redux/slices/gmailApi";
 import delete_icon from "../../images/delete.png";
 import SingleMail from "./SingleMail";
+import { useDispatch, useSelector } from "react-redux";
+import { setGmailId } from "../redux/slices/gmailSlice";
 
 const Content = ({ field }) => {
   const { data: gmails, isLoading, isSuccess, refetch } = useGetGmailsQuery();
   const [deleteGmail] = useDeleteGmailMutation();
   const [state, setState] = useState("primary");
-  const [gmailId, setGmailId] = useState("");
+  const dispatch=useDispatch();
+  const gmailId = useSelector((store) => store.getGmail.gmailId);
   let promotion = [];
   let primary = [];
   let social = [];
@@ -35,7 +38,7 @@ const Content = ({ field }) => {
   const handleDelete = (id) => {
     deleteGmail(id);
     alert("Mail deleted successfully!");
-    setGmailId("")
+    dispatch(setGmailId({gmailId:""}))
   };
 
   let data = "";
@@ -66,7 +69,7 @@ const Content = ({ field }) => {
           </div>
         ) : (
           <div className="flex justify-between w-[5%]">
-            <button onClick={() => setGmailId("")}>⬅️</button>
+            <button onClick={() => dispatch(setGmailId({gmailId:""}))}>⬅️</button>
             <img
               src={delete_icon}
               className="cursor-pointer"
@@ -110,10 +113,10 @@ const Content = ({ field }) => {
               </div>
             </div>
           )}
-          <GmailList data={data} setGmailId={setGmailId} />
+          <GmailList data={data}/>
         </div>
       ) : (
-        <SingleMail id={gmailId} />
+        <SingleMail />
       )}
     </div>
   );

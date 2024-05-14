@@ -4,6 +4,8 @@ import {
   useDeleteGmailMutation,
   useEditGmailMutation,
 } from "../redux/slices/gmailApi";
+import { useDispatch } from "react-redux";
+import { setGmailId } from "../redux/slices/gmailSlice";
 
 const Gmail = ({
   _id,
@@ -14,11 +16,11 @@ const Gmail = ({
   content,
   date,
   starred,
-  setGmailId,
 }) => {
   const [showDelete, setShowDelete] = useState(false);
   const [deleteGmail] = useDeleteGmailMutation();
   const [editGmail] = useEditGmailMutation();
+  const dispatch = useDispatch();
   const handleDelete = (id) => {
     deleteGmail(id);
     alert("Mail deleted successfully!");
@@ -40,13 +42,16 @@ const Gmail = ({
     <div
       className="flex justify-between p-2 hover:shadow-lg bg-[#ccc8d1] w-[99.5%] hover:cursor-pointer border border-[#939395] hover:w-[99.3%]"
       onMouseEnter={() => setShowDelete(true)}
-      onMouseLeave={() => setShowDelete(false)}      
+      onMouseLeave={() => setShowDelete(false)}
     >
       <div className="flex w-[17%] pl-2">
         <button onClick={handleStarred}>{starred ? "⭐" : "☆"}</button>
         <p className="pl-2">{from}</p>
       </div>
-      <div className="w-[75%] flex" onClick={() => setGmailId(_id)}>
+      <div
+        className="w-[75%] flex"
+        onClick={() => dispatch(setGmailId({ gmailId: _id }))}
+      >
         <p>{subject}</p>
         <p className="text-[#4f4f4f]">- {content}</p>
       </div>
