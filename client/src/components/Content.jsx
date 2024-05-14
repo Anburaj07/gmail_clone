@@ -13,11 +13,8 @@ const Content = ({ field }) => {
   const { data: gmails, isLoading, isSuccess, refetch } = useGetGmailsQuery();
   const [deleteGmail] = useDeleteGmailMutation();
   const [state, setState] = useState("primary");
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
   const gmailId = useSelector((store) => store.getGmail.gmailId);
-  let promotion = [];
-  let primary = [];
-  let social = [];
 
   if (isLoading) {
     return (
@@ -27,49 +24,41 @@ const Content = ({ field }) => {
     );
   }
 
-  if (isSuccess) {
-    promotion = gmails.filter((el) => el.category === "promotion");
-    social = gmails.filter((el) => el.category === "social");
-    primary = gmails.filter(
-      (el) => el.category !== "promotion" && el.category !== "social"
-    );
-  }
+  let promotion = gmails.filter((el) => el.category === "promotion");
+  let primary = gmails.filter(
+    (el) => el.category !== "promotion" && el.category !== "social"
+  );
+  let social = gmails.filter((el) => el.category === "social");
 
-  const handleDelete = (id) => {
-    deleteGmail(id);
-    alert("Mail deleted successfully!");
-    dispatch(setGmailId({gmailId:""}))
-  };
-
-  let data = "";
-  if (field == "inbox") {
+  let data = primary;
+  if (field === "inbox") {
     data =
       state === "primary"
         ? primary
         : state === "promotion"
         ? promotion
         : social;
-  } else if (field == "starred") {
-    data = gmails.filter((el) => el.starred == true);
-  }
-  // else if (field == "sent") {
-  //   data = gmails.filter((el) => el.starred==true); //doubt
-  // }
-  else {
-    data = primary;
+  } else if (field === "starred") {
+    data = gmails.filter((el) => el.starred === true);
   }
 
+  const handleDelete = (id) => {
+    deleteGmail(id);
+    alert("Mail deleted successfully!");
+    dispatch(setGmailId({ gmailId: "" }));
+  };
+
   return (
-    <div className="w-[83.5%] pb-4 rounded-2xl bg-[#e1d9dd] sticky top-0 h-[36rem] box-border overflow-y-auto ">
+    <div className="w-[83.5%] rounded-2xl bg-[#e1d9dd] sticky top-0 h-[36rem] box-border overflow-y-auto">
       <div className="flex justify-between p-4 sticky top-0 bg-[#e1d9dd]">
         {!gmailId ? (
           <div className="flex justify-between w-[5%]">
             <button>◻️</button>
-            <button onClick={() => refetch()}>🔄️</button>
+            <button onClick={refetch}>🔄️</button>
           </div>
         ) : (
           <div className="flex justify-between w-[5%]">
-            <button onClick={() => dispatch(setGmailId({gmailId:""}))}>⬅️</button>
+            <button onClick={() => dispatch(setGmailId({ gmailId: "" }))}>⬅️</button>
             <img
               src={delete_icon}
               className="cursor-pointer"
@@ -82,38 +71,29 @@ const Content = ({ field }) => {
       </div>
       {!gmailId ? (
         <div>
-          {field == "inbox" && (
+          {field === "inbox" && (
             <div className={`w-[50%] text-left flex items-start pl-2`}>
-              <div
-                onClick={() => setState("primary")}
-                className={`w-[33%] p-2 hover:bg-[#d0c3c5] ${
-                  state === "primary" &&
-                  "font-semibold text-[#5030E5] border-b-4 border-[#0b57d0]"
-                }`}
-              >
-                <button>🖼️ Primary</button>
-              </div>
-              <div
-                onClick={() => setState("promotion")}
-                className={`w-[33%] p-2 hover:bg-[#d0c3c5] ${
-                  state === "promotion" &&
-                  "font-semibold text-[#5030E5] border-b-4 border-[#0b57d0]"
-                }`}
-              >
-                <button>🧷 Promotions</button>
-              </div>
-              <div
-                onClick={() => setState("social")}
-                className={`w-[33%] p-2 hover:bg-[#d0c3c5] ${
-                  state === "social" &&
-                  "font-semibold text-[#4123c5] border-b-4 border-[#0b57d0]"
-                }`}
-              >
-                <button>👪 Social</button>
-              </div>
+              {["primary", "promotion", "social"].map((category) => (
+                <div
+                  key={category}
+                  onClick={() => setState(category)}
+                  className={`w-[33%] p-2 hover:bg-[#d0c3c5] ${
+                    state === category &&
+                    "font-semibold text-[#5030E5] border-b-4 border-[#0b57d0]"
+                  }`}
+                >
+                  <button>
+                    {category === "primary"
+                      ? "🖼️ Primary"
+                      : category === "promotion"
+                      ? "🧷 Promotions"
+                      : "👪 Social"}
+                  </button>
+                </div>
+              ))}
             </div>
           )}
-          <GmailList data={data}/>
+          <GmailList data={data} />
         </div>
       ) : (
         <SingleMail />

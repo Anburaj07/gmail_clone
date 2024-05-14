@@ -21,10 +21,12 @@ const Gmail = ({
   const [deleteGmail] = useDeleteGmailMutation();
   const [editGmail] = useEditGmailMutation();
   const dispatch = useDispatch();
-  const handleDelete = (id) => {
-    deleteGmail(id);
+
+  const handleDelete = () => {
+    deleteGmail(_id);
     alert("Mail deleted successfully!");
   };
+
   const handleStarred = () => {
     editGmail({
       id: _id,
@@ -38,20 +40,21 @@ const Gmail = ({
     });
   };
 
+  const handleClick = () => {
+    dispatch(setGmailId({ gmailId: _id }));
+  };
+
   return (
     <div
       className="flex justify-between p-2 hover:shadow-lg bg-[#ccc8d1] w-[99.5%] hover:cursor-pointer border border-[#939395] hover:w-[99.3%]"
       onMouseEnter={() => setShowDelete(true)}
       onMouseLeave={() => setShowDelete(false)}
     >
-      <div className="flex w-[17%] pl-2">
+      <div className="flex w-[17%] pl-2" onClick={handleClick}>
         <button onClick={handleStarred}>{starred ? "⭐" : "☆"}</button>
         <p className="pl-2">{from}</p>
       </div>
-      <div
-        className="w-[75%] flex"
-        onClick={() => dispatch(setGmailId({ gmailId: _id }))}
-      >
+      <div className="w-[75%] flex" onClick={handleClick}>
         <p>{subject}</p>
         <p className="text-[#4f4f4f]">- {content}</p>
       </div>
@@ -63,7 +66,7 @@ const Gmail = ({
             src={delete_icon}
             className="cursor-pointer"
             alt=""
-            onClick={() => handleDelete(_id)}
+            onClick={handleDelete}
           />
         )}
       </div>

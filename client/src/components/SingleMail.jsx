@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 
 const SingleMail = () => {
   const gmailId = useSelector((store) => store.getGmail.gmailId);
-  const { data, isLoading, isSuccess } = useGetGmailByIdQuery(gmailId);
+  const { data, isLoading } = useGetGmailByIdQuery(gmailId);
   const [editGmail] = useEditGmailMutation();
 
   if (isLoading) {
@@ -33,13 +33,13 @@ const SingleMail = () => {
   };
 
   return (
-    <div>
-      <h2 className="text-xl font-medium pl-32">{subject}</h2>
+    <div className="bg-white ">
+      <h2 className="text-xl font-medium pl-32 pt-4">{subject}</h2>
       <div className="flex m-auto w-[93%]  justify-between mt-8 ">
         <div className="flex  w-[37%]  justify-around  ">
           <div className="flex w-[70%] justify-between items-center ">
             <div className="w-[15%]">
-              <img className="rounded-full" src={dpPic} alt="" />
+              <img className="rounded-full" src={dpPic} alt="profile" />
             </div>
             <div className="w-[85%] ">
               <div className="flex">
@@ -62,9 +62,9 @@ const SingleMail = () => {
         </div>
       </div>
       <div>
-        <h2 className="text-xl font-medium text-center mt-16">{content}</h2>
+        <h2 className="text-xl font-medium text-center pt-4 mt-16">{content}</h2>
       </div>
-      <div className="flex w-[15%] justify-between mt-60 ml-16">
+      <div className="flex w-[15%] justify-between mt-56 ml-16 pb-4">
         <button className="text-md border border-gray-800 rounded-full p-2">
           {" "}
           ⬅️ Reply{" "}
