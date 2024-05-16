@@ -54,10 +54,12 @@ const Gmail = ({
         <button onClick={handleStarred}>{starred ? "⭐" : "☆"}</button>
         <p className="pl-2">{from}</p>
       </div>
+      
       <div className="w-[75%] flex" onClick={handleClick}>
         <p>{subject}</p>
         <p className="text-[#4f4f4f]">- {content}</p>
       </div>
+
       <div className="w-[7%]">
         {!showDelete ? (
           <p>{date}</p>
